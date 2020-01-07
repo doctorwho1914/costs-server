@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Cost} from './entities/cost.entity';
 import {Repository} from 'typeorm';
@@ -10,11 +10,16 @@ export class AppService {
     private readonly costRepository: Repository<Cost>,
   ) {
   }
+
   getHello(): string {
     return 'Hello World!';
   }
 
   addCost(data): Promise<any> {
     return this.costRepository.insert(data);
+  }
+
+  listCost(): Promise<any[]> {
+    return this.costRepository.find();
   }
 }

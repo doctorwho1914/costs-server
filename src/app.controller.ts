@@ -19,7 +19,15 @@ export class AppController {
     try {
       return this.appService.addCost(data);
     } catch (e) {
-      console.log(e);
+      return e;
+    }
+  }
+
+  @Get('/cost')
+  listCost(): Promise<any[]> {
+    try {
+      return this.appService.listCost();
+    } catch (e) {
       return e;
     }
   }
