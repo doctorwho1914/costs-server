@@ -20,6 +20,10 @@ export class AppService {
   }
 
   listCost(): Promise<any[]> {
-    return this.costRepository.find();
+    return this.costRepository.find({
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 }
