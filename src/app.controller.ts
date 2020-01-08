@@ -1,6 +1,5 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {AppService} from './app.service';
-import {Cost} from './entities/cost.entity';
 
 @Controller()
 export class AppController {
@@ -12,7 +11,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('/cost')
+  @Post('/api/cost')
   addCost(
     @Body() data: any,
   ): Promise<any> {
@@ -23,7 +22,7 @@ export class AppController {
     }
   }
 
-  @Get('/cost')
+  @Get('/api/cost')
   listCost(): Promise<any[]> {
     try {
       return this.appService.listCost();
