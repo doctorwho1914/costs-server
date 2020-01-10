@@ -24,6 +24,11 @@ export class AppService {
       order: {
         id: 'DESC',
       },
+      relations: ['category'],
     });
+  }
+
+  delete(id: number): Promise<any> {
+    return this.costRepository.delete(id);
   }
 }

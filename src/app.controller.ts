@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
 import {AppService} from './app.service';
 
 @Controller()
@@ -26,6 +26,17 @@ export class AppController {
   listCost(): Promise<any[]> {
     try {
       return this.appService.listCost();
+    } catch (e) {
+      return e;
+    }
+  }
+
+  @Delete('/api/cost/:id')
+  delete(
+    @Param() id: number,
+  ): Promise<any[]> {
+    try {
+      return this.appService.delete(id);
     } catch (e) {
       return e;
     }

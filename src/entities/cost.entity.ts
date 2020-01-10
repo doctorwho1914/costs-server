@@ -1,4 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn} from 'typeorm';
+import {Category} from './category.entity';
 
 @Entity()
 export class Cost {
@@ -6,10 +7,11 @@ export class Cost {
   id: number;
 
   @Column('int')
-  category: number;
+  categoryId: number;
 
-  @OneToOne(type => Cost)
-  cost: Cost;
+  @OneToOne(type => Category)
+  @JoinColumn()
+  category: Category;
 
   @Column('decimal')
   value: number;
