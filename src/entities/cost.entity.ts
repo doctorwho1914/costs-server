@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, JoinColumn, ManyToOne} from 'typeorm';
 import {Category} from './category.entity';
 
 @Entity()
@@ -9,7 +9,7 @@ export class Cost {
   @Column('int')
   categoryId: number;
 
-  @OneToOne(type => Category)
+  @ManyToOne(type => Category)
   @JoinColumn()
   category: Category;
 

@@ -11,6 +11,15 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('/api/category')
+  categoryList(): Promise<any[]> {
+    try {
+      return this.appService.categoryList();
+    } catch (e) {
+      return e;
+    }
+  }
+
   @Post('/api/cost')
   addCost(
     @Body() data: any,
