@@ -3,6 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Cost} from './entities/cost.entity';
 import {Repository} from 'typeorm';
 import {Category} from './entities/category.entity';
+import moment = require('moment');
 
 @Injectable()
 export class AppService {
@@ -22,14 +23,24 @@ export class AppService {
     return this.costRepository.insert(data);
   }
 
-  listCost(): Promise<any[]> {
-    return this.costRepository.find({
+  listCost(fromDate?, toDate?): Promise<any[]> {
+    const options: any = {
       order: {
-        id: 'DESC',
+        createdAt: 'DESC',
       },
       relations: ['category'],
-    });
+    };
+
+    // todo remove this
+    // tslint:disable-next-line:no-unused-expression
+    toDate || (toDate = moment());
+    // tslint:disable-next-line:no-unused-expression
+    fromDate || (fromDate = moment().startOf('month'));
+
+    options.where = `"createdAt" < '${moment(toDate).format('YYYY-MM-DD hh:mm:ss')}' and "createdAt"  > '${moment(fromDate).format('YYYY-MM-DD hh:mm:ss')}'`;
+    return this.costRepository.find(options);
   }
+
   categoryList(): Promise<any[]> {
     return this.categoryRepository.find({
       order: {

@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Query} from '@nestjs/common';
 import {AppService} from './app.service';
 
 @Controller()
@@ -32,9 +32,12 @@ export class AppController {
   }
 
   @Get('/api/cost')
-  listCost(): Promise<any[]> {
+  listCost(
+    @Query('fromDate') fromDate,
+    @Query('toDate') toDate,
+  ): Promise<any[]> {
     try {
-      return this.appService.listCost();
+      return this.appService.listCost(fromDate, toDate);
     } catch (e) {
       return e;
     }
