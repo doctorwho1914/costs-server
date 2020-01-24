@@ -66,19 +66,21 @@ export class AppService {
     // tslint:disable-next-line:no-unused-expression
     fromDate || (fromDate = moment().startOf('month'));
 
-    return this.costRepository
-      .createQueryBuilder('cost')
-      .where('cost.createdAt BETWEEN :begin AND :end',
+    return this.categoryRepository
+      .createQueryBuilder('category')
+      .leftJoinAndSelect('category.costs', 'costs')
+      .select(['category.id as id', 'category.name as name'])
+      .addSelect('SUM(value) AS sum')
+      .where('costs.createdAt BETWEEN :begin AND :end',
         {
           begin: moment(fromDate).format('YYYY-MM-DD hh:mm:ss'),
           end: moment(toDate).format('YYYY-MM-DD hh:mm:ss'),
         },
       )
-      .leftJoinAndSelect('cost.category', 'category')
-      .select(['cost.categoryId as id', 'category.name as name'])
-      .addSelect('SUM(value) AS sum')
-      .groupBy('cost.categoryId')
+      .groupBy('costs.categoryId')
       .addGroupBy('category.name')
+      .addGroupBy('category.id')
+      .orderBy('category.id')
       .getRawMany();
   }
 
