@@ -68,15 +68,13 @@ export class AppService {
 
     return this.categoryRepository
       .createQueryBuilder('category')
-      .leftJoinAndSelect('category.costs', 'costs')
-      .select(['category.id as id', 'category.name as name'])
-      .addSelect('SUM(value) AS sum')
-      .where('costs.createdAt BETWEEN :begin AND :end',
+      .leftJoinAndSelect('category.costs', 'costs', 'costs.createdAt BETWEEN :begin AND :end',
         {
           begin: moment(fromDate).format('YYYY-MM-DD hh:mm:ss'),
           end: moment(toDate).format('YYYY-MM-DD hh:mm:ss'),
-        },
-      )
+        },)
+      .select(['category.id as id', 'category.name as name'])
+      .addSelect('SUM(value) AS sum')
       .groupBy('costs.categoryId')
       .addGroupBy('category.name')
       .addGroupBy('category.id')
