@@ -9,7 +9,7 @@ export class Cost {
   @Column('int')
   categoryId: number;
 
-  @ManyToOne(type => Category)
+  @ManyToOne(type => Category, (category: Category) => category.costs)
   @JoinColumn()
   category: Category;
 

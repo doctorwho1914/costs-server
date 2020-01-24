@@ -43,6 +43,18 @@ export class AppController {
     }
   }
 
+  @Get('/api/cost/statistics')
+  sumByCategory(
+    @Query('fromDate') fromDate,
+    @Query('toDate') toDate,
+  ): Promise<any[]> {
+    try {
+      return this.appService.sumByCategory(fromDate, toDate);
+    } catch (e) {
+      return e;
+    }
+  }
+
   @Delete('/api/cost/:id')
   delete(
     @Param() id: number,
